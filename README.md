@@ -1,4 +1,5 @@
 # Maxrelax Dotfiles for Raspberry Pi
+> Note this is a WIP repo !
 
 
 This dotfiles setup is specially customized for **ZSH** (oh-my-zsh) on Mac OS X. It is a near-complete port of Mathias' original BASH dotfiles but with some bonus goodies that I've customized & added. My goal is to make this ZSH dotfiles distribution widely compatible and robust yet opinionated.
@@ -86,12 +87,6 @@ export GIT_AUTHOR_EMAIL="drewlustro@gmail.com"
 export GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
 git config --global user.email "$GIT_AUTHOR_EMAIL"
 
-
-# z command
-Z_APP=~/dev/third-party/z/z.sh
-if [[ -x $Z_APP ]]; then
-    . $Z_APP
-fi
 ```
 
 You could also use `$ZSH/custom/extra.zsh` to override settings, functions and aliases from my dotfiles repository. It’s probably better to [fork this repository](https://github.com/drewlustro/dotfiles/fork_select) instead, though.
@@ -99,27 +94,11 @@ You could also use `$ZSH/custom/extra.zsh` to override settings, functions and a
 
 ## Contact & Feedback
 
-| [![twitter/msodrew](http://io.drewlustro.com/img/malibu-400.jpg)](http://twitter.com/msodrew "@msodrew on Twitter") |
+| [![twitter/maxrelaxco](https://maxrelax.co/images/mr-icon-box-650s.png)](http://twitter.com/maxrelaxco "@maxrelaxco on Twitter") |
 |---|
-| [Drew Lustro](http://drewlustro.com) |
+| [Maxrelax](https://maxrelax.co) |
 
-Suggestions & improvements [welcome](https://github.com/drewlustro/dotfiles/issues)!
 
 ### Original Author Credit & Huge Thanks...
 
 ##### [Mathias Bynens](http://mathiasbynens.be/)
-
-#### Mathias' Thanks to…
-
-* @ptb and [his _OS X Lion Setup_ repository](https://github.com/ptb/Mac-OS-X-Lion-Setup)
-* [Ben Alman](http://benalman.com/) and his [dotfiles repository](https://github.com/cowboy/dotfiles)
-* [Chris Gerke](http://www.randomsquared.com/) and his [tutorial on creating an OS X SOE master image](http://chris-gerke.blogspot.com/2012/04/mac-osx-soe-master-image-day-7.html) + [_Insta_ repository](https://github.com/cgerke/Insta)
-* [Cãtãlin Mariş](https://github.com/alrra) and his [dotfiles repository](https://github.com/alrra/dotfiles)
-* [Gianni Chiappetta](http://gf3.ca/) for sharing his [amazing collection of dotfiles](https://github.com/gf3/dotfiles)
-* [Jan Moesen](http://jan.moesen.nu/) and his [ancient `.bash_profile`](https://gist.github.com/1156154) + [shiny _tilde_ repository](https://github.com/janmoesen/tilde)
-* [Lauri ‘Lri’ Ranta](http://lri.me/) for sharing [loads of hidden preferences](http://lri.me/osx.html#hidden-preferences)
-* [Matijs Brinkhuis](http://hotfusion.nl/) and his [dotfiles repository](https://github.com/matijs/dotfiles)
-* [Nicolas Gallagher](http://nicolasgallagher.com/) and his [dotfiles repository](https://github.com/necolas/dotfiles)
-* [Sindre Sorhus](http://sindresorhus.com/)
-* [Tom Ryder](http://blog.sanctum.geek.nz/) and his [dotfiles repository](https://github.com/tejr/dotfiles)
-* anyone who [contributed a patch](https://github.com/mathiasbynens/dotfiles/contributors) or [made a helpful suggestion](https://github.com/mathiasbynens/dotfiles/issues)
