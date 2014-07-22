@@ -72,7 +72,7 @@ function installApps() {
     echo "+ Updating apt-get and installing essential packages..."
     br
     sudo apt-get update
-    sudo apt-get install build-essential mlocate node npm python ruby virtualenv virtualenvwrapper alsa-dev alsa-base-udeb alsa-source libalsaplayer-dev alsa-lib ibao-common libao-dev libasound2 libasound2-dev libavahi-common-dev libavahi-client-dev libpulse-dev libasound2-plugins avahi-daemon
+    sudo apt-get install build-essential mlocate node npm python ruby virtualenvwrapper alsa-source libalsaplayer-dev libao-common libao-dev libasound2 libasound2-dev libavahi-common-dev libavahi-client-dev libpulse-dev libasound2-plugins avahi-daemon
     echo "+ Done"
     hr
     echo "+ Finished installing common apps."
