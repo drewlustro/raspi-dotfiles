@@ -7,7 +7,7 @@ ZSH=$HOME/.oh-my-zsh
 # time that oh-my-zsh is loaded.
 
 # Default theme that ships with oh-my-zsh
-ZSH_THEME="robbyrussell"
+ZSH_THEME="maxrelax-raspi"
 
 # Drew's themes
 #ZSH_THEME="lazyprodigy"

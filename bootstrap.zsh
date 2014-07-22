@@ -1,4 +1,5 @@
 #!/usr/bin/env zsh
+
 function hr() {
     echo "------------------------------------------------------------"
 }
@@ -58,12 +59,37 @@ function installDotfiles() {
     fi
 }
 
+function installApps() {
+    # Add reailtime audio repository
+    echo "Maxrelax Rasperry Pi Common Apps"
+    hr
+    echo "+ Adding rpi.autostatic.com repo to apt-get..."
+    br
+    wget -O - http://rpi.autostatic.com/autostatic.gpg.key| sudo apt-key add -
+    sudo wget -O /etc/apt/sources.list.d/autostatic-audio-raspbian.list http://rpi.autostatic.com/autostatic-audio-raspbian.list
+    echo '+ Done'
+    hr
+    echo "+ Updating apt-get and installing essential packages..."
+    br
+    sudo apt-get update
+    sudo apt-get install build-essential mlocate node npm python ruby virtualenv virtualenvwrapper alsa-dev alsa-base-udeb alsa-source libalsaplayer-dev alsa-lib ibao-common libao-dev libasound2 libasound2-dev libavahi-common-dev libavahi-client-dev libpulse-dev libasound2-plugins avahi-daemon
+    echo "+ Done"
+    hr
+    echo "+ Finished installing common apps."
+    hr
+    br
+}
+
 
 if [[ "$1" == "--force" || "$1" == "-f" ]]; then
     installDotfiles
+elif [[ "$1" == "--apps" || "$1" == "-a" ]]; then
+    installApps
 else
     br
-    echo "Lustro ZSH dotfiles installation"
+    echo "Maxrelax Rasperry Pi dotfiles for ZSH"
+    echo "+ More Info: https://github.com/maxrelax/raspi-dotfiles"
+    echo "+ Use --apps to install common applications"
     hr
     br
     echo "This may overwrite existing files in your home directory"
@@ -75,6 +101,7 @@ else
         echo "Aborted installation."
     fi
 fi
+unset installApps
 unset installDotfiles
 unset hr
 unset br

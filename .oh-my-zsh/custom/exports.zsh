@@ -1,11 +1,9 @@
 export GIT_EDITOR=vim
-export VISUAL=atom
-export EDITOR=atom
+export VISUAL=vim
+export EDITOR=vim
 
 export WORKON_HOME=/sites/envs
 export TM_PYCHECKER=pylint
-export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Home/
-export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib
 
 # PATH export additions for macports
 export PATH=$PATH:/opt/local/bin:/opt/local/sbin:/opt/local/bin
@@ -33,8 +31,8 @@ export MANPAGER="less -X"
 # Always enable colored `grep` output
 export GREP_OPTIONS="--color=auto"
 
-# Prefer 64-bit architecture when building
-export ARCHFLAGS='-arch x86_64'
-
 # Export-dependent aliases
 alias zshconfig="$EDITOR ~/.zshrc ~/.oh-my-zsh"
+
+# X11-less DBUS support
+export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/dbus/system_bus_socket
