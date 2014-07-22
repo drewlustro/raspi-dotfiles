@@ -32,7 +32,12 @@ wget --no-check-certificate http://install.ohmyz.sh -O - | sh
 You can clone the repository wherever you want. (I like to keep it in `~/dev/dotfiles`. The bootstrapper script will pull in the latest version from the master branch before installing. Remember to run these commands from a *zsh shell!*
 
 ```zsh
-git clone https://github.com/maxrelax/raspi-dotfiles.git && cd dotfiles && source bootstrap.zsh
+git clone https://github.com/maxrelax/raspi-dotfiles.git dotfiles && cd dotfiles && source bootstrap.zsh
+```
+
+#### Optional Apps Install
+```zsh
+source bootstrap.zsh --apps
 ```
 
 
