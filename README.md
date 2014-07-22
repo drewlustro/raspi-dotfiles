@@ -94,12 +94,12 @@ git config --global user.email "$GIT_AUTHOR_EMAIL"
 
 ```
 
-You could also use `$ZSH/custom/extra.zsh` to override settings, functions and aliases from my dotfiles repository. It’s probably better to [fork this repository](https://github.com/drewlustro/dotfiles/fork_select) instead, though.
+You could also use `$ZSH/custom/extra.zsh` to override settings, functions and aliases from my dotfiles repository. It’s probably better to fork this repository instead, though.
 
 
 ## Contact & Feedback
 
-| [![twitter/maxrelaxco](https://maxrelax.co/images/mr-icon-box-650s.png)](http://twitter.com/maxrelaxco "@maxrelaxco on Twitter") |
+| [![twitter/maxrelaxco](https://maxrelax.co/images/mr-icon.png)](http://twitter.com/maxrelaxco "@maxrelaxco on Twitter") |
 |---|
 | [Maxrelax](https://maxrelax.co) |
 
