@@ -12,9 +12,14 @@ then CARETCOLOR="red"
 else CARETCOLOR="blue"
 fi
 
+# color vars
+eval my_gray='$FG[237]'
+eval my_orange='$FG[214]'
+
 local return_code="%(?..%{$fg[red]%}%? ↵%{$reset_color%})"
 
-PROMPT='%m%{${fg_bold[magenta]}%} :: %{$reset_color%}%{${fg[green]}%}%3~ $(git_prompt_info)%{${fg_bold[$CARETCOLOR]}%}%#%{${reset_color}%} '
+
+PROMPT='$my_gray%m%{${reset_color}%}%{${fg_bold[magenta]}%} :: %{$reset_color%}%{${fg[green]}%}%3~ $(git_prompt_info)%{${fg_bold[$CARETCOLOR]}%}%#%{${reset_color}%} '
 
 RPS1='$(vi_mode_prompt_info) ${return_code}'
 

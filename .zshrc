@@ -25,15 +25,12 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 
-plugins=()
+plugins=(git bower node npm zsh-syntax-highlighting)
 # Drew's Plugins
 # plugins=(git bower coffee extract gem node npm pip python rvm virtualenv virtualenvwrapper zsh-syntax-highlighting)
 
 # use 'default' virtualenv for python (environments live in /sites/envs)
 # workon default
-
-# setup PATH to check /usr/local and /usr/bin first!
-export PATH=$HOME/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:$PATH
 
 # Load RVM scripts if RVM is installed
 if [[ -s "$HOME/.rvm/scripts/rvm" ]] then
@@ -43,3 +40,5 @@ if [[ -s "$HOME/.rvm/scripts/rvm" ]] then
 fi
 
 source $ZSH/oh-my-zsh.sh
+
+/etc/motd.maxrelax

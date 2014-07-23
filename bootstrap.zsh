@@ -61,7 +61,7 @@ function installDotfiles() {
 
 function installApps() {
     # Add reailtime audio repository
-    echo "Maxrelax Rasperry Pi Common Apps"
+    echo "Maxrelax RasPi - Common Apps"
     hr
     echo "+ Adding rpi.autostatic.com repo to apt-get..."
     br
@@ -80,11 +80,45 @@ function installApps() {
     br
 }
 
+function installDecorations() {
+    # Add superfluous decorations
+    echo "Maxrelax RasPi - Decorations"
+    hr
+    echo "+ Installing Message of the Day (MOTD)"
+    br
+    if [[ !(-a "/etc/motd.backup") && (-a "/etc/motd") ]]; then
+        echo "++ Backing up original /etc/motd -> /etc/motd.backup"
+        sudo cp /etc/motd /etc/motd.backup
+    fi
+
+    echo "Copying motd files..."
+    sudo cp ./etc/motd /etc/motd
+    sudo cp ./etc/motd.tail /etc/
+    sudo cp ./etc/motd.maxrelax /etc/
+    sudo chmod 0755 /etc/motd.maxrelax
+
+    echo "Turn off PrintLastLog in /etc/ssh/sshd_config..."
+    sudo sed -i 's/PrintLastLog yes/PrintLastLog no/g' /etc/ssh/sshd_config
+
+    echo "Add /etc/motd.maxrelax to .zshrc"
+    sed -i 's/\/etc\/motd.maxrelax\n//g' .zshrc
+    sed -i 's/\/etc\/motd.maxrelax//g' .zshrc
+    echo '/etc/motd.maxrelax\n' >> .zshrc
+
+    echo '+ Done'
+    hr
+    echo "+ I've put up the decorations!"
+    hr
+    br
+}
+
 
 if [[ "$1" == "--force" || "$1" == "-f" ]]; then
     installDotfiles
 elif [[ "$1" == "--apps" || "$1" == "-a" ]]; then
     installApps
+elif [[ "$1" == "--decor" || "$1" == "--decorations" || "$1" == "-d" ]]; then
+    installDecorations
 else
     br
     echo "Maxrelax Rasperry Pi dotfiles for ZSH"
@@ -103,5 +137,6 @@ else
 fi
 unset installApps
 unset installDotfiles
+unset installDecorations
 unset hr
 unset br
