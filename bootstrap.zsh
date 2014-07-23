@@ -86,7 +86,7 @@ function installDecorations() {
     hr
     echo "+ Installing Message of the Day (MOTD)"
     br
-    if [[ !(-a "/etc/motd.backup") && (-a "/etc/motd") ]]; then
+    if [[ ! ( -a "/etc/motd.backup" ) && ( -a "/etc/motd" ) ]]; then
         echo "++ Backing up original /etc/motd -> /etc/motd.backup"
         sudo cp /etc/motd /etc/motd.backup
     fi
