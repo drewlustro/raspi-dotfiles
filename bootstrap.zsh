@@ -100,7 +100,7 @@ function installDecorations() {
     echo "Turn off PrintLastLog in /etc/ssh/sshd_config..."
     sudo sed -i 's/PrintLastLog yes/PrintLastLog no/g' /etc/ssh/sshd_config
 
-    echo "Add /etc/motd.maxrelax to .zshrc"
+    echo "Add /etc/motd.maxrelax to ~/.zshrc"
     sed -i 's/\/etc\/motd.maxrelax\n//g' ~/.zshrc
     sed -i 's/\/etc\/motd.maxrelax//g' ~/.zshrc
     echo '/etc/motd.maxrelax\n' >> ~/.zshrc
