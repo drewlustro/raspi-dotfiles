@@ -3,12 +3,6 @@ export VISUAL=vim
 export EDITOR=vim
 
 export WORKON_HOME=/sites/envs
-export TM_PYCHECKER=pylint
-
-# PATH export additions for macports
-export PATH=$PATH:/opt/local/bin:/opt/local/sbin:/opt/local/bin
-export PATH=$PATH:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin
-export PATH=$PATH:/usr/local/git/bin:/usr/X11/bin
 
 # Larger bash history (allow 32³ entries; default is 500)
 export HISTSIZE=32768
@@ -35,4 +29,6 @@ export GREP_OPTIONS="--color=auto"
 alias zshconfig="$EDITOR ~/.zshrc ~/.oh-my-zsh"
 
 # X11-less DBUS support
-export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/dbus/system_bus_socket
+# dbusinfo=( $(dbus-launch) )
+# export DBUS_SESSION_BUS_ADDRESS=${dbusinfo[0]#DBUS_SESSION_BUS_ADDRESS=}
+# export DBUS_SESSION_BUS_PID=${dbusinfo[1]#DBUS_SESSION_BUS_PID=}

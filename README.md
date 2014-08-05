@@ -1,6 +1,13 @@
 # Maxrelax Dotfiles for Raspberry Pi
 > Note this is a WIP repo !
 
+## TODO
+
+* Convert `bootstrap.zsh` script to bash for compatibility
+* Remove default Raspian OS cruft
+* Fix `.vimrc` issues with `sudo`
+* Formalize `bootstrap.zsh` script to not be total garbage.
+* Make squeezelite server install optional
 
 This dotfiles setup is specially customized for **ZSH** (oh-my-zsh) on Mac OS X. It is a near-complete port of Mathias' original BASH dotfiles but with some bonus goodies that I've customized & added. My goal is to make this ZSH dotfiles distribution widely compatible and robust yet opinionated.
 

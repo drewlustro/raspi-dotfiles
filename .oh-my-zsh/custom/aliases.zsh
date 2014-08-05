@@ -1,3 +1,7 @@
+# Raspberry Pi specific
+alias use-audio-auto="amixer cset numid=3 0"
+alias use-audio-headphones="amixer cset numid=3 1"
+alias use-audio-hdmi="amixer cset numid=3 2"
 
 # new ones
 alias hh="history | grep"

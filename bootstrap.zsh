@@ -69,10 +69,62 @@ function installApps() {
     sudo wget -O /etc/apt/sources.list.d/autostatic-audio-raspbian.list http://rpi.autostatic.com/autostatic-audio-raspbian.list
     echo '+ Done'
     hr
+
     echo "+ Updating apt-get and installing essential packages..."
     br
     sudo apt-get update
-    sudo apt-get install build-essential mlocate node npm python ruby virtualenvwrapper alsa-source libalsaplayer-dev libao-common libao-dev libasound2 libasound2-dev libavahi-common-dev libavahi-client-dev libpulse-dev libasound2-plugins avahi-daemon
+    sudo apt-get -y dist-upgrade
+    sudo apt-get -y upgrade
+    sudo apt-get install -y build-essential mlocate node npm python ruby virtualenvwrapper
+    sudo apt-get install -y alsa-source libalsaplayer-dev libao-common libao-dev libasound2 libasound2-dev libavahi-common-dev libavahi-client-dev avahi-daemon
+    sudo apt-get install -y pulseaudio pulseaudio-dbg pulseaudio-utils libpulse-dev libasound2-plugins
+    hr
+
+
+    # Squeezebox setup
+    sudo apt-get install libjpeg8 libpng12-0 libgif4 libexif12 libswscale2 libavcodec53
+    sudo apt-get install -y libflac-dev libfaad2
+
+    echo "+ Deliberately skipping install of Squeezebox Server 7.7.3 (do this manually)"
+    # Version 7.7.3 (current stable)
+    # echo "+ Installing Squeezebox Server 7.7.3..."
+    # wget http://downloads.slimdevices.com/LogitechMediaServer_v7.7.3/logitechmediaserver_7.7.3_all.deb
+    # sudo dpkg -i logitechmediaserver_7.7.3_all.deb
+
+    # Version 7.8.0 (might be unstable)
+    # wget http://downloads.slimdevices.com/LogitechMediaServer_v7.8.0/logitechmediaserver_7.8.0_all.deb
+    # sudo dpkg -i logitechmediaserver_7.8.0_all.deb
+
+    echo "+ Installing Squeezelite Client"
+    SQUEEZELITE_DAEMON=/usr/local/bin/squeezelite
+    wget -P /tmp http://squeezelite-downloads.googlecode.com/git/squeezelite-armv6hf
+    sudo cp $SQUEEZELITE_DAEMON /tmp/squeezelite.old
+    sudo mv /tmp/squeezelite-armv6hf $SQUEEZELITE_DAEMON
+    sudo chmod u+x $SQUEEZELITE_DAEMON
+
+    echo "+ Setting up Squeezelite Client to start on boot"
+    sudo cp ./etc/init.d/squeezelite /etc/init.d/squeezelite
+    sudo chmod a+x /etc/init.d/squeezelite
+    sudo update-rc.d /etc/init.d/squeezelite defaults
+    SL_NAME="$(hostname -s)-Slave-Client"
+    SL_SOUNDCARD=$(${SQUEEZELITE_DAEMON} -l | grep front | tr -s ' ' | cut -d ' ' -f2)
+    [[ -n "$SL_SOUNDCARD" ]] || SL_SOUNDCARD=sysdefault
+    echo "Squeezelite client name is: '${SL_NAME}'"
+    echo "Squeezelite default soundcard is: '${SL_SOUNDCARD}'"
+
+
+
+
+    # echo "Setting up configuration and groups for pulseaudio.."
+    # br
+    # sudo chmod u+s /usr/bin/pulseaudio
+    # sudo groupadd pulse-rt
+    # sudo usermod -aG pulse-rt pi
+    # sudo usermod -aG pulse-rt $(whoami)
+    # sudo usermod -aG pulse-access $(whoami)
+    # sudo usermod -aG rtkit $(whoami)
+    # mkdir $HOME/.pulse
+
     echo "+ Done"
     hr
     echo "+ Finished installing common apps."
@@ -104,6 +156,9 @@ function installDecorations() {
     sed -i 's/\/etc\/motd.maxrelax\n//g' ~/.zshrc
     sed -i 's/\/etc\/motd.maxrelax//g' ~/.zshrc
     echo '/etc/motd.maxrelax\n' >> ~/.zshrc
+
+    echo "Extra performance enhancements..."
+    sudo apt-get remove -y wolfram-engine
 
     echo '+ Done'
     hr
