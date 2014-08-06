@@ -105,7 +105,9 @@ function installApps() {
     echo "+ Setting up Squeezelite Client to start on boot"
     sudo cp ./etc/init.d/squeezelite /etc/init.d/squeezelite
     sudo chmod a+x /etc/init.d/squeezelite
-    sudo update-rc.d /etc/init.d/squeezelite defaults
+    pushd /etc/init.d/
+    sudo update-rc.d squeezelite defaults
+    popd
     SL_NAME="$(hostname -s)-Slave-Client"
     SL_SOUNDCARD=$(${SQUEEZELITE_DAEMON} -l | grep front | tr -s ' ' | cut -d ' ' -f2)
     [[ -n "$SL_SOUNDCARD" ]] || SL_SOUNDCARD=sysdefault
