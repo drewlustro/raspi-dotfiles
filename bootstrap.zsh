@@ -36,7 +36,12 @@ function installDotfiles() {
         hr
         mkdir "$ZSH/custom" > /dev/null 2>&1
         mkdir "$ZSH/themes" > /dev/null 2>&1
-        rsync -av --no-perms --exclude ".git/" --exclude ".gitignore" .vim .vimrc .osx .zshrc .oh-my-zsh ~
+        rsync -av --no-perms \
+                --exclude ".git/" --exclude ".gitignore" \
+                --exclude "etc/" \
+                 .vim .vimrc .zshrc .oh-my-zsh \
+                 .curlrc .functions .inputrc .wgetrc \
+                 .gitconfig .gitattributes ~
 
         br
         br
@@ -75,17 +80,17 @@ function installApps() {
     sudo apt-get update
     sudo apt-get -y dist-upgrade
     sudo apt-get -y upgrade
-    sudo apt-get install -y build-essential mlocate node npm python ruby virtualenvwrapper
-    sudo apt-get install -y alsa-source libalsaplayer-dev libao-common libao-dev libasound2 libasound2-dev libavahi-common-dev libavahi-client-dev avahi-daemon
-    sudo apt-get install -y pulseaudio pulseaudio-dbg pulseaudio-utils libpulse-dev libasound2-plugins
+    sudo apt-get install -y build-essential mlocate node npm python ruby virtualenvwrapper git
+    sudo apt-get install -y alsa-source libalsaplayer-dev libao-common libao-dev libasound2 libavahi-common-dev libavahi-client-dev avahi-daemon autoconf libtool libdaemon-dev libasound2-dev libpopt-dev libssl-dev libsslcommon2-dev
+
     hr
 
 
     # Squeezebox setup
-    sudo apt-get install libjpeg8 libpng12-0 libgif4 libexif12 libswscale2 libavcodec53
-    sudo apt-get install -y libflac-dev libfaad2
+    # sudo apt-get install libjpeg8 libpng12-0 libgif4 libexif12 libswscale2 libavcodec53
+    # sudo apt-get install -y libflac-dev libfaad2
 
-    echo "+ Deliberately skipping install of Squeezebox Server 7.7.3 (do this manually)"
+    # echo "+ Deliberately skipping install of Squeezebox Server 7.7.3 (do this manually)"
     # Version 7.7.3 (current stable)
     # echo "+ Installing Squeezebox Server 7.7.3..."
     # wget http://downloads.slimdevices.com/LogitechMediaServer_v7.7.3/logitechmediaserver_7.7.3_all.deb
@@ -95,43 +100,48 @@ function installApps() {
     # wget http://downloads.slimdevices.com/LogitechMediaServer_v7.8.0/logitechmediaserver_7.8.0_all.deb
     # sudo dpkg -i logitechmediaserver_7.8.0_all.deb
 
-    echo "+ Installing Squeezelite Client"
-    SQUEEZELITE_DAEMON=/usr/local/bin/squeezelite
-    wget -P /tmp http://squeezelite-downloads.googlecode.com/git/squeezelite-armv6hf
-    sudo cp $SQUEEZELITE_DAEMON /tmp/squeezelite.old
-    sudo mv /tmp/squeezelite-armv6hf $SQUEEZELITE_DAEMON
-    sudo chmod u+x $SQUEEZELITE_DAEMON
+    # echo "+ Installing Squeezelite Client"
+    # SQUEEZELITE_DAEMON=/usr/local/bin/squeezelite
+    # wget -P /tmp http://squeezelite-downloads.googlecode.com/git/squeezelite-armv6hf
+    # sudo cp $SQUEEZELITE_DAEMON /tmp/squeezelite.old
+    # sudo mv /tmp/squeezelite-armv6hf $SQUEEZELITE_DAEMON
+    # sudo chmod u+x $SQUEEZELITE_DAEMON
 
-    echo "+ Setting up Squeezelite Client to start on boot"
-    sudo cp ./etc/init.d/squeezelite /etc/init.d/squeezelite
-    sudo chmod a+x /etc/init.d/squeezelite
-    pushd /etc/init.d/
-    sudo update-rc.d squeezelite defaults
-    popd
-    SL_NAME="$(hostname -s)-Slave-Client"
-    SL_SOUNDCARD=$(${SQUEEZELITE_DAEMON} -l | grep front | tr -s ' ' | cut -d ' ' -f2)
-    [[ -n "$SL_SOUNDCARD" ]] || SL_SOUNDCARD=sysdefault
-    echo "Squeezelite client name is: '${SL_NAME}'"
-    echo "Squeezelite default soundcard is: '${SL_SOUNDCARD}'"
-
-
-
-
-    # echo "Setting up configuration and groups for pulseaudio.."
-    # br
-    # sudo chmod u+s /usr/bin/pulseaudio
-    # sudo groupadd pulse-rt
-    # sudo usermod -aG pulse-rt pi
-    # sudo usermod -aG pulse-rt $(whoami)
-    # sudo usermod -aG pulse-access $(whoami)
-    # sudo usermod -aG rtkit $(whoami)
-    # mkdir $HOME/.pulse
+    # echo "+ Setting up Squeezelite Client to start on boot"
+    # sudo cp ./etc/init.d/squeezelite /etc/init.d/squeezelite
+    # sudo chmod a+x /etc/init.d/squeezelite
+    # pushd /etc/init.d/
+    # sudo update-rc.d squeezelite defaults
+    # popd
+    # SL_NAME="$(hostname -s)-Slave-Client"
+    # SL_SOUNDCARD=$(${SQUEEZELITE_DAEMON} -l | grep front | tr -s ' ' | cut -d ' ' -f2)
+    # [[ -n "$SL_SOUNDCARD" ]] || SL_SOUNDCARD=sysdefault
+    # echo "Squeezelite client name is: '${SL_NAME}'"
+    # echo "Squeezelite default soundcard is: '${SL_SOUNDCARD}'"
 
     echo "+ Done"
     hr
     echo "+ Finished installing common apps."
     hr
     br
+}
+
+function installShairportSync() {
+    echo "Downloading shairport-sync..."
+    git clone https://github.com/mikebrady/shairport-sync.git
+    cd shairport-sync
+    echo "Configuring shairport-sync..."
+    autoreconf -i -f
+    ./configure --with-alsa --with-avahi --with-ssl=openssl
+    make
+    echo "Installing shairport-sync..."
+    sudo make install
+    echo "Adding shairport-sync startup script..."
+    sudo cp ../etc/init.d/shairport-sync /etc/init.d/
+    sudo chmod +x /etc/init.d/shairport-sync
+    echo "Adding shairport-sync to runlevel..."
+    sudo update-rc.d shairport-sync defaults
+    echo "Done."
 }
 
 function installDecorations() {
@@ -176,6 +186,8 @@ elif [[ "$1" == "--apps" || "$1" == "-a" ]]; then
     installApps
 elif [[ "$1" == "--decor" || "$1" == "--decorations" || "$1" == "-d" ]]; then
     installDecorations
+elif [[ "$1" == "--shairport-sync" || "$1" == "-s" ]]; then
+    installShairportSync
 else
     br
     echo "Maxrelax Rasperry Pi dotfiles for ZSH"
