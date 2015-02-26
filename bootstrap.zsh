@@ -80,6 +80,7 @@ function installApps() {
     sudo apt-get update
     sudo apt-get -y dist-upgrade
     sudo apt-get -y upgrade
+    sudo apt-get install -y linux-headers-$(uname -r)
     sudo apt-get install -y build-essential mlocate node npm python ruby virtualenvwrapper git
     sudo apt-get install -y alsa-source libalsaplayer-dev libao-common libao-dev libasound2 libavahi-common-dev libavahi-client-dev avahi-daemon autoconf libtool libdaemon-dev libasound2-dev libpopt-dev libssl-dev libsslcommon2-dev
 
